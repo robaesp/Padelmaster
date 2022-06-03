@@ -51,27 +51,30 @@ class PostController extends Controller
             'hour_booking' => $request->hour_booking,
             'img' => $request->img,
             'user_id' => auth()->user()->id
-            /* 'user_enrolled_id'=> auth()->user()->id,
-            'court_enrolled_id'=> court()->id
-            $pista=Court::findOrfail(id);
-            $user=
-            'user_enrolled_id'=> auth()->user()->username, */
-        ]);
-
-        $reserva = Booking::create([
-            'court_id' => $court->id,
-            'user_id' => auth()->user()->id
         ]);
 
         return redirect()->route('profile.index', auth()->user()->username);
+    }
+
+    public function storeBooking(Court $court)
+    {
+        if($court->challengers()->where('user_id', auth()->user()->id)->count()>0){
+            return back();
+        }else{
+            $court->challengers()->attach(auth()->user()->id);
+            return back();
+        }
+        
     }
 
     public function show(Court $court, User $user)
     {
         return view('post.show', [
             'court' => $court,
-            'user' => $user
+            'user' => $user,
+            /* dd($court->challengers) */
         ]);
+
     }
 
     public function destroy(Court $court)

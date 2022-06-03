@@ -21,15 +21,20 @@ class Court extends Model
         'user_id',
         'players'
     ];
-    public function user()
+    public function challengers()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'bookings');
     }
 
-    public function booking()
+    public function user_create()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /* public function booking()
     {
         return $this->hasMany(Booking::class, 'bookings' );
-    }
+    } */
 
     /* public function getRouteKeyName()
     {

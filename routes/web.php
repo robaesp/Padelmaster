@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImgController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\CourtController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +32,14 @@ Route::post('/login', [LoginController::class, 'loginPost']);
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('/{user:username}', [PostController::class, 'index'])->name('profile.index');
+Route::get('{user:username}/editProfile',[ProfileController::class, 'index'])->name('profileEdit.index');
+Route::post('{user:username}/editProfile',[ProfileController::class, 'store'])->name('profileStore.index');
 
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 Route::post('/post', [PostController::class, 'store'])->name('post.store');
 Route::get('/post/{court}', [PostController::class,'show'])->name('post.show');
+Route::post('/post/{court}', [PostController::class,'storeBooking'])->name('post.booking');
+
 Route::delete('/post/{court}', [PostController::class, 'destroy'])->name('post.destroy');
 
 Route::post('/imagenes', [ImgController::class,'store'])->name('imagenes.store');

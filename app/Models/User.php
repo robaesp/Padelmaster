@@ -46,11 +46,16 @@ class User extends Authenticatable
 
     public function courts()
     {
+        return $this->belongsToMany(Court::class, 'bookings');
+    }
+
+    public function create_courts()
+    {
         return $this->hasMany(Court::class);
     }
 
-    public function user_booking()
+    /* public function user_booking()
     {
         return $this->hasMany(Booking::class, 'bookings');
-    }
+    } */
 }
