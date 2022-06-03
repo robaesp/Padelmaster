@@ -31,4 +31,25 @@ Perfil: {{ $user->username }}
         </div>
     </div>
 </div>
+<section class="container mx-auto mt-10">
+    <h2 class="text-4xl text-center font-black my-10">Mis partidos</h2>
+
+    @if($court->count())
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    @foreach($court as $c)
+    <div>
+        <a href="{{ route('post.show', $c) }}">
+            <img src="{{ asset('uploads')."/". $c->img}}" alt="Imagen del partido {{ $c->name}}">
+        </a>
+    </div>
+    @endforeach
+    </div>
+    <div class="my-5">
+        {{ $court->links()}}
+    </div>
+    
+    @else
+        <p class="text-gray-600 uppercase tex-sm text-center font-bold">Anímate y sube tu primer partido</p>
+    @endif
+</section>
 @endsection

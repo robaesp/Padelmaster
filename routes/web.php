@@ -35,5 +35,8 @@ Route::get('/{user:username}', [PostController::class, 'index'])->name('profile.
 
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::get('/post/{court}', [PostController::class,'show'])->name('post.show');
+Route::delete('/post/{court}', [PostController::class, 'destroy'])->name('post.destroy');
 
 Route::post('/imagenes', [ImgController::class,'store'])->name('imagenes.store');
+

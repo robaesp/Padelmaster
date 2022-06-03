@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Court;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -13,46 +15,72 @@ class PostController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(User $user)
     {
-       
-       return view('profile', [
-           'user'=>$user
-       ]);
+        $court = Court::where('user_id', $user->id)->simplePaginate(10);
+        return view('profile', [
+
+            'user' => $user,
+            'court' => $court
+        ]);
     }
+
     public function create()
     {
         return view('post.create');
     }
 
     public function store(Request $request)
-    {  
+    {
         $this->validate($request, [
             'name' => 'required|max:20',
             'city' => 'required|max:30',
             'category_lvl_court' => 'required|in:1,2,3,4,5',
-            'description' =>  'required',
             'date_booking' => 'required|date|after:start_date',
             'hour_booking' => 'required',
             'img' => 'required'
         ]);
-        $s=$request->hour_booking;
-        $date_new = Carbon::createFromFormat('H:i', $s)->format('H:i');
-        
-         Court::create([
+
+        $court = Court::create([
             'name' => $request->name,
             'city' => $request->city,
             'category_lvl_court' => $request->category_lvl_court,
             'description' => $request->description,
             'date_booking' => $request->date_booking,
             'hour_booking' => $request->hour_booking,
-             'img' => $request->img, 
-            'user_id' => auth()->user()->id,
-            'players' => auth()->user()->username
-        ]); 
-        
+            'img' => $request->img,
+            'user_id' => auth()->user()->id
+            /* 'user_enrolled_id'=> auth()->user()->id,
+            'court_enrolled_id'=> court()->id
+            $pista=Court::findOrfail(id);
+            $user=
+            'user_enrolled_id'=> auth()->user()->username, */
+        ]);
 
+        $reserva = Booking::create([
+            'court_id' => $court->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return redirect()->route('profile.index', auth()->user()->username);
+    }
+
+    public function show(Court $court, User $user)
+    {
+        return view('post.show', [
+            'court' => $court,
+            'user' => $user
+        ]);
+    }
+
+    public function destroy(Court $court)
+    {
+        if (auth()->user()->id === $court->user_id) {
+            $court->delete();
+        } else {
+            dd("Esta pista no te pertenece");
+        }
         return redirect()->route('profile.index', auth()->user()->username);
     }
 }

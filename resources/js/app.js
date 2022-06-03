@@ -1,13 +1,20 @@
-import { createdApp } from 'vue';
-import PaginaInicio from './components/PaginaInicio.vue';
+//AXIOS
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-const app= createApp({})
+//VUE
+import { createApp } from 'vue'
+import PaginaInicio from './components/PaginaInicio.vue'
+
+const app = createApp({})
 
 app.component('pagina-inicio', PaginaInicio)
+
 app.mount('#app')
 
+//DROPZONE
 import { Dropzone } from "dropzone";
-
+if(document.getElementById('dropzone')!= undefined){
 Dropzone.autoDiscover = false;
 const dropzone = new Dropzone('#dropzone', {
     dictDefaultMessage: 'Sube aqui tu imagen',
@@ -37,3 +44,4 @@ dropzone.on('success', function (file, response) {
 dropzone.on("removedfile", function () { 
     document.querySelector('[name="img"]').value = "";
 });
+}

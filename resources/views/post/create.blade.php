@@ -128,7 +128,7 @@ Crear una pista
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 id="hour_booking"
                                 name="hour_booking"
-                                type="text"
+                                
                                 >
                                   <option value="07:00">07:00</option>
                                   <option value="07:30">07:30</option>
@@ -176,10 +176,6 @@ Crear una pista
                             <p class="text-red-400 bg-slate-600 my-2 rounded-lg text-sm p-3 text-center">{{ $message }}</p>
                             @enderror
                   </div>
-                  <input
-                        name="players"
-                        type="hidden"
-                        />
                 <input 
                     type="submit"
                     value="Crear partido"

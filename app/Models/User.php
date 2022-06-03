@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Court::class);
     }
+
+    public function user_booking()
+    {
+        return $this->hasMany(Booking::class, 'bookings');
+    }
 }
