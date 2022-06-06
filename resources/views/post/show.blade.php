@@ -45,12 +45,18 @@ Lugar: {{ $court->name }}
             <input type="submit" value="Eliminar partido" class="bg-red-400 hover:bg-red-700 p-2 rounded text-white font-bold mt-4 cursor-pointer">
         </form>
           @else
+          @if($court->challengers()->where('user_id', auth()->user()->id)->count() > 0)
+          <form action={{ route('post.deleteBooking', $court)}} method="POST">
+            @method('DELETE')
+            @csrf
+            <input type="submit" value="Eliminar reserva" class="bg-red-400 hover:bg-red-700 p-2 rounded text-white font-bold mt-4 cursor-pointer">
+          @else  
           <form action="{{ route('post.booking', $court)}}" method="POST">
             @csrf
             <input type="submit" value="Inscribirme" class="bg-blue-400 hover:bg-green-500 p-2 rounded text-white font-bold mt-4 cursor-pointer">
-            </form> 
+            </form>  
           @endif
-        
+          @endif
     </div>
     
 @endsection

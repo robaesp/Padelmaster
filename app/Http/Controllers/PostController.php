@@ -56,16 +56,28 @@ class PostController extends Controller
         return redirect()->route('profile.index', auth()->user()->username);
     }
 
-    public function storeBooking(Court $court)
+    public function storeBooking(Request $request, Court $court)
     {
-        if($court->challengers()->where('user_id', auth()->user()->id)->count()>0){
-            return back();
+        if ($court->challengers()->count('user_id') < $court->size - 1) {
+            if ($court->challengers()->where('user_id', auth()->user()->id)->count() > 0) {
+                return back();
+            } else {
+                $court->challengers()->attach(auth()->user()->id);
+                return back();
+            }
         }else{
-            $court->challengers()->attach(auth()->user()->id);
             return back();
         }
-        
     }
+
+    public function deleteBooking(Court $court)
+    {
+        if($court->challengers()->whereIn('user_id',[auth()->user()->id])->get()){
+           $court->challengers()->where('user_id',auth()->user()->id)->detach(auth()->user()->id);
+           return back();
+        }
+    }
+
 
     public function show(Court $court, User $user)
     {
@@ -74,7 +86,6 @@ class PostController extends Controller
             'user' => $user,
             /* dd($court->challengers) */
         ]);
-
     }
 
     public function destroy(Court $court)

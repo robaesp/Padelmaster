@@ -20,4 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/courts', [APIController::class, 'courts'])->name('court');
+Route::get('/users', [APIController::class, 'users'])->name('user');
+Route::get('/bookings', [APIController::class, 'booking'])->name('booking');
+
+
 Route::get('/courts/{court}', [APIController::class, 'city'])->name('court');

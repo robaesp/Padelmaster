@@ -8,7 +8,7 @@ Perfil: {{ $user->username }}
 <div class="flex justify-center">
     <div class="w-full md:w-8/12 lg:w-6/12 flex flex-col items-center md:flex-row">
         <div class="w-6/12 lg:w-4/12 px-4 ">
-            <img src="{{ asset('img/profileUser.svg')}}" alt="foto de perfil">
+            <img src="{{ $user->imagen ? asset('profiles').'/'.$user->imagen : asset('img/profileUser.svg')}}" alt="foto de perfil">
         </div>
         <div class="md:w-6/12 lg:w-4/12 px-4 flex flex-col items-center md:justify-center md:items-start md:py-5">
             <div class="flex items-center gap-3">
@@ -21,17 +21,24 @@ Perfil: {{ $user->username }}
                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
                           </svg>
                     </a>
+                    @if($user->type == 'admin')
+                    <a href="{{ route('admin') }}" class="flex items-center gap-2 bg-white border p-2 text-white rounded text-sm 
+                    uppercase font-bold cursor-pointer"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                        <p class="text-black">Zona administración</p>
+                    </a>
+                    @endif
                 @endif
             @endauth
             </div>
             <p class="text-black text-sm mb-3 font-bold mt-6">
-                Seguidores:<span class="font-normal"> 0</span>
+                Nombre:<span class="font-normal"> {{ $user->name}}</span>
             </p>
             <p class="text-black text-sm mb-3 font-bold">
-                Seguidos:<span class="font-normal"> 0</span>
-            </p>
-            <p class="text-black text-sm mb-3 font-bold">
-                Categoría: <span class="font-normal"> {{ $user->categorylvl}}</span>
+                Nivel:<span class="font-normal"> Categoría {{ $user->categorylvl}} </span>
             </p>
             <p class="text-black text-sm mb-3 font-bold">
                 Lado:<span class="font-normal"> {{ $user->side}}</span>
@@ -61,7 +68,7 @@ Perfil: {{ $user->username }}
     </div>
     
     @else
-        <p class="text-gray-600 uppercase tex-sm text-center font-bold">Anímate y sube tu primer partido</p>
+        <p class="text-gray-600 uppercase tex-sm text-center font-bold">Anímate y sube algún partido</p>
     @endif
 </section>
 @endsection

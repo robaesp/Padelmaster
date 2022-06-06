@@ -14,6 +14,13 @@ class APIController extends Controller
         return response()->json($courts);
     }
 
+    public function users()
+    {
+        $users = User::all();
+        return response()->json($users);
+    }
+
+
     public function court(Court $court)
     {
         return response()->json($court);

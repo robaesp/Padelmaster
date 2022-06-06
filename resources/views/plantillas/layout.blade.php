@@ -28,6 +28,7 @@
 
                 @auth
                 <nav class="flex gap-2 items-center">
+                    
                     <a class="flex items-center gap-2 bg-white border p-2 text-white rounded text-sm 
                     uppercase font-bold cursor-pointer" href="{{ route('post.create') }}"
                     >

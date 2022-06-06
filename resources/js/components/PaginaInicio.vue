@@ -36,7 +36,7 @@ export default {
             court: []
         }
     },
-    mounted() {
+    created() {
         axios.get('/api/courts')
             .then(respuesta => {
                 this.court = respuesta.data;
