@@ -3,15 +3,18 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 //VUE
-import { createApp } from 'vue';
+import {createApp} from 'vue';
+import CrudAdministrador from './components/CrudAdministrador.vue';
 import PaginaInicio from './components/PaginaInicio.vue';
-import CrudAdmin from './components/CrudAdmin.vue';
+
+
 
 
 const app = createApp({})
-app.component('pagina-inicio', PaginaInicio)
-app.component('crud-admin', CrudAdmin)
-app.mount('#app')
+
+app.component('pagina-inicio', PaginaInicio);
+app.component('crud-admin', CrudAdministrador);
+app.mount('#app');
 
 //DROPZONE
 import { Dropzone } from "dropzone";

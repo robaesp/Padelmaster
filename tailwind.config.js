@@ -2,6 +2,7 @@ module.exports = {
   content: [
     "./resources/**/*.blade.php", 
     "./resources/**/*.blade.js",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
     "./node_modules/flowbite/**/*.js",
     "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php"
   ],

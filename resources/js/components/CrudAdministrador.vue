@@ -1,9 +1,10 @@
-import axios from 'axios'
+
 <template>
 
     <div class="container max-w-7xl mx-auto mt-8 ">
         <div class="mb-4">
             <div class="flex justify-end">
+
                 <button v-on:click="createUser()"
                     class="px-4 py-2 mr-4 rounded-md bg-sky-500 text-sky-100 hover:bg-green-600">
                     Crea un usuario</button>
@@ -275,9 +276,10 @@ import axios from 'axios'
             </div>
         </div>
     </div>
-
 </template>
+
 <script>
+
 export default {
     data: function () {
         return {
