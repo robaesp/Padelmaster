@@ -16,13 +16,16 @@ class PostController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(User $user)
+    public function index($username)
     {
-        $court = Court::where('user_id', $user->id)->simplePaginate(10);
+        $user= User::where('username', $username)->with('courts', 'create_courts')->first();
+        
+
+        
+        /* $court = Court::where('user_id', $user->id)->simplePaginate(10); */
         return view('profile', [
 
             'user' => $user,
-            'court' => $court
         ]);
     }
 
@@ -37,12 +40,17 @@ class PostController extends Controller
             'name' => 'required|max:20',
             'city' => 'required|max:30',
             'category_lvl_court' => 'required|in:1,2,3,4,5',
-            'date_booking' => 'required|date|after:start_date',
+            'date_booking' => 'required|date|after:yesterday',
             'hour_booking' => 'required',
-            'img' => 'required'
+            'img' => 'required',
+            
+            
+            
         ]);
-
+        
         $court = Court::create([
+
+            
             'name' => $request->name,
             'city' => $request->city,
             'category_lvl_court' => $request->category_lvl_court,
@@ -50,6 +58,8 @@ class PostController extends Controller
             'date_booking' => $request->date_booking,
             'hour_booking' => $request->hour_booking,
             'img' => $request->img,
+            'category' => $request->category ?? "normal",
+            'size' => $request->size ?? "4",
             'user_id' => auth()->user()->id
         ]);
 
@@ -58,6 +68,7 @@ class PostController extends Controller
 
     public function storeBooking(Request $request, Court $court)
     {
+        
         if ($court->challengers()->count('user_id') < $court->size - 1) {
             if ($court->challengers()->where('user_id', auth()->user()->id)->count() > 0) {
                 return back();

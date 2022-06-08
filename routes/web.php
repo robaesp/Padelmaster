@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 
 
@@ -38,6 +39,7 @@ Route::post('/admin/createUser', [AdminController::class,'storeUser'])->name('ad
 Route::get('/admin/editUser/{id}', [AdminController::class,'editUser'])->name('admin.editUser');
 Route::put('/admin/editUser/{id}', [AdminController::class,'editedUser'])->name('admin.editedUser');
 Route::delete('/admin/deleteUser/{id}', [AdminController::class,'deletedUser'])->name('admin.deleteUser');
+Route::get('/admin/dennied', [AdminController::class,'dennied'])->name('admin.dennied');
 
 Route::get('/admin/createCourt', [AdminController::class,'createCourt'])->name('admin.createCourt');
 Route::post('/admin/createCourt', [AdminController::class,'storeCourt'])->name('admin.storeCourt');
@@ -48,12 +50,15 @@ Route::delete('/admin/deleteCourt/{id}', [AdminController::class,'deletedCourt']
 
 
 
+
 Route::get('/{user:username}', [PostController::class, 'index'])->name('profile.index');
 Route::get('/editProfile/{id}',[ProfileController::class, 'index'])->name('profileEdit.index');
 Route::put('/editProfile/{id}',[ProfileController::class, 'store'])->name('profileStore.index');
 
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 Route::post('/post', [PostController::class, 'store'])->name('post.store');
+
+
 Route::get('/post/{court}', [PostController::class,'show'])->name('post.show');
 Route::post('/post/{court}', [PostController::class,'storeBooking'])->name('post.booking');
 Route::delete('/post/delete/{court}', [PostController::class, 'deleteBooking'])->name('post.deleteBooking');

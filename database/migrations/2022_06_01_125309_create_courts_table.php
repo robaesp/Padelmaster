@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum("category_lvl_court", ["1","2","3","4","5"]);
-            $table->enum("category", ["normal", "tournament"])->default("normal");
+            $table->enum("category", ["normal", "tournament"])->default('normal');
             $table->date('date_booking');
             $table->string('hour_booking');
             $table->string('city');

@@ -16,119 +16,166 @@ class AdminController extends Controller
 
     public function index(User $user, Court $court)
     {
-        return view('admin', [
-            'user' => $user,
-            'court' => $court
-        ]);
+        if (auth()->user()->type == 'admin') {
+            return view('admin', [
+                'user' => $user,
+                'court' => $court
+            ]);
+        } else {
+
+            return redirect()->route('admin.dennied');
+        }
     }
 
     public function createUser()
     {
-        return view('admin.createUser');
+        if (auth()->user()->type == 'admin') {
+            return view('admin.createUser');
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function storeUser(Request $request)
     {
 
-        User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'email' => $request->email,
-            'type' => $request->type,
-            'side' => $request->side
-        ]);
-
-        return redirect()->route('admin');
+        if (auth()->user()->type == 'admin') {
+            User::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'email' => $request->email,
+                'type' => $request->type,
+                'side' => $request->side
+            ]);
+            return redirect()->route('admin');
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function editUser($id)
     {
-        $users = User::findOrFail($id);
-        return view('admin.editUser', compact('users'));
+        if (auth()->user()->type == 'admin') {
+            $users = User::findOrFail($id);
+            return view('admin.editUser', compact('users'));
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function editedUser(Request $request, $id)
     {
-        $user_edit = User::findOrFail($id);
-        $this->validate($request, [
-            'username' => ['required', 'unique:users,username', 'min:3', 'max:20'],
-            'email' => ['required', 'unique:users,email', 'min:7'],
-            'password' => ['required', 'min:3', 'max:20'],
-        ]);
-        $user_edit->name = $request->name;
-        $user_edit->username = $request->username;
-        $user_edit->email = $request->email;
-        $user_edit->password = Hash::make($request->password);
-        $user_edit->categorylvl = $request->categorylvl;
-        $user_edit->side = $request->side;
-        $user_edit->type = $request->type;
-        $user_edit->save();
-        return redirect()->route('admin');
+        if (auth()->user()->type == 'admin') {
+            $user_edit = User::findOrFail($id);
+            $this->validate($request, [
+                'username' => ['required', 'unique:users,username', 'min:3', 'max:20'],
+                'email' => ['required', 'unique:users,email', 'min:7'],
+                'password' => ['required', 'min:3', 'max:20'],
+            ]);
+            $user_edit->name = $request->name;
+            $user_edit->username = $request->username;
+            $user_edit->email = $request->email;
+            $user_edit->password = Hash::make($request->password);
+            $user_edit->categorylvl = $request->categorylvl;
+            $user_edit->side = $request->side;
+            $user_edit->type = $request->type;
+            $user_edit->save();
+            return redirect()->route('admin');
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
+
 
     public function deletedUser($id)
     {
-        $user_delete=User::findOrFail($id);
-        $user_delete->delete();
-        
+        if (auth()->user()->type == 'admin') {
+            $user_delete = User::findOrFail($id);
+            $user_delete->delete();
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function createCourt()
     {
-        return view('admin.createCourt');
+        if (auth()->user()->type == 'admin') {
+            return view('admin.createCourt');
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function storeCourt(Request $request)
     {
-        $court = Court::create([
-            'name' => $request->name,
-            'city' => $request->city,
-            'size' => $request->size,
-            'category_lvl_court' => $request->category_lvl_court,
-            'category' => $request->category,
-            'description' => $request->description,
-            'date_booking' => $request->date_booking,
-            'hour_booking' => $request->hour_booking,
-            'img' => $request->img,
-            'user_id' => auth()->user()->id
-        ]);
-        return redirect()->route('admin');
+        if (auth()->user()->type == 'admin') {
+            $court = Court::create([
+                'name' => $request->name,
+                'city' => $request->city,
+                'size' => $request->size,
+                'category_lvl_court' => $request->category_lvl_court,
+                'category' => $request->category,
+                'description' => $request->description,
+                'date_booking' => $request->date_booking,
+                'hour_booking' => $request->hour_booking,
+                'img' => $request->img,
+                'user_id' => auth()->user()->id
+            ]);
+            return redirect()->route('admin');
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function editCourt($id)
     {
-        $courts = Court::findOrFail($id);
-        return view('admin.editCourt', compact('courts'));
+        if (auth()->user()->type == 'admin') {
+            $courts = Court::findOrFail($id);
+            return view('admin.editCourt', compact('courts'));
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function editedCourt(Request $request, $id)
     {
-        $court_edit = Court::findOrFail($id);
-        $this->validate($request, [
-            'name' => 'required|max:20',
-            'city' => 'required|max:30',
-            'category_lvl_court' => 'required|in:1,2,3,4,5',
-            'date_booking' => 'required|date|after:start_date',
-            'hour_booking' => 'required',
-        ]);
-        $court_edit->name = $request->name;
-        $court_edit->description = $request->description;
-        $court_edit->category = $request->category;
-        $court_edit->date_booking = $request->date_booking;
-        $court_edit->hour_booking = $request->hour_booking;
-        $court_edit->city = $request->city;
-        $court_edit->category_lvl_court = $request->category_lvl_court;
-        $court_edit->size = $request->size;
+        if (auth()->user()->type == 'admin') {
+            $court_edit = Court::findOrFail($id);
+            $this->validate($request, [
+                'name' => 'required|max:20',
+                'city' => 'required|max:30',
+                'category_lvl_court' => 'required|in:1,2,3,4,5',
+                'date_booking' => 'required|date|after:start_date',
+                'hour_booking' => 'required',
+            ]);
+            $court_edit->name = $request->name;
+            $court_edit->description = $request->description;
+            $court_edit->category = $request->category;
+            $court_edit->date_booking = $request->date_booking;
+            $court_edit->hour_booking = $request->hour_booking;
+            $court_edit->city = $request->city;
+            $court_edit->category_lvl_court = $request->category_lvl_court;
+            $court_edit->size = $request->size;
 
-        $court_edit->save();
-        return redirect()->route('admin');
+            $court_edit->save();
+            return redirect()->route('admin');
+        } else {
+            dd('Adonde vas pillin');
+        }
     }
 
     public function deletedCourt($id)
     {
-        $court_delete=Court::findOrFail($id);
-        $court_delete->delete();
-              
+        if (auth()->user()->type == 'admin') {
+            $court_delete = Court::findOrFail($id);
+            $court_delete->delete();
+        } else {
+            dd('Adonde vas pillin');
+        }
+    }
+    public function dennied()
+    {
+        
     }
 }

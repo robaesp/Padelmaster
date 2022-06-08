@@ -10,7 +10,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     
-    <body class="bg-gray-50">
+    <body class="bg-gray-100 ">
        
        <header class="p-5 border bg-blue-700 shadow">
             <div class="container mx-auto flex justify-between" item-center>    
@@ -59,10 +59,19 @@
            @yield('contenido')
        </main>
        
-       <footer class="mt-10 text-center p-5 text-gray-500 font-bold-uppercase">
-           PadelMaster - Derechos reservados {{ now()->year }}
-           
-       </footer>
+       <footer class="text-center text-white mt-8" style="background-color: #0a4275;">
+        <div class="container p-6">
+          <div class="">
+            
+          </div>
+        </div>
+      
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+          © {{now()->year}} Copyright:
+          <a class="text-white" href="https://padelmaster.works/">PadelMaster</a>
+        </div>
+      </footer>
+       
     </body>
     
 </html>

@@ -165,8 +165,8 @@ Crear una pista
                             @error('hour_booking')
                             <p class="text-red-400 bg-slate-600 my-2 rounded-lg text-sm p-3 text-center">{{ $message }}</p>
                             @enderror
-                </div>
-                <div class="mb-5">
+                </div>                   
+            <div class="mb-5">
                         <input
                         name="img"
                         type="hidden"
@@ -176,6 +176,7 @@ Crear una pista
                             <p class="text-red-400 bg-slate-600 my-2 rounded-lg text-sm p-3 text-center">{{ $message }}</p>
                             @enderror
                   </div>
+                
                 <input 
                     type="submit"
                     value="Crear partido"

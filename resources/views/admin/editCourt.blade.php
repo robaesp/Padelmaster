@@ -145,7 +145,7 @@ Admin-Editar Pista: {{ $courts->id}}
                             name="category"
                             class="border p-3 w-full rounded-lg">
                             <option value="normal">Normal</option>
-                            <option value="torunament">Torneo</option>
+                            <option value="tournament">Torneo</option>
                         </select>
                     </div>
             <input 

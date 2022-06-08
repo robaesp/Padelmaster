@@ -30,4 +30,15 @@ class APIController extends Controller
     {
         $courts = Court::where('user_id', $user->id)->with('courts')->get();
     }
+    
+    
+    public function reserva($id)
+    {
+        return count((Court::with('challengers')->findOrFail($id)->challengers));
+        
+    }
+    public function challengers(Court $c)
+    {
+        dd($c->challengers()->where('user_id'));
+    }
 }
